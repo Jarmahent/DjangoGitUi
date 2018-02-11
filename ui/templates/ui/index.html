@@ -1,17 +1,32 @@
 <!DOCTYPE html>
+{% load static %}
+
 <html>
+<head>
+  <script src={% static 'js/jq.js' %}></script>
+  <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" type="text/css" media="all">
+  <script src={% static 'js/bootstrap.js' %}></script>
+
+</head>
 <body>
 
-<h1>{{login}}</h1>
-<h1>{{id}}</h1>
-<h1>{{avatar_url}}</h1>
-<h1>{{avatar_id}}</h1>
-<h1>{{name}}</h1>
-<img src="{{avatar_url}}">
-<h1>{{company}}</h1>
-<h1>{{bio}}</h1>
-<h1>{{followers}}</h1>
+  <div class="container">
+<div class="panel panel-default">
+  <div class="panel-heading" style="text-align: center;">
+    <a href="https://github.com/{{login}}"><img src="{{avatar_url}}" height="100" width="100"></a>
+    <h1>{{login}}</h1>
+  </div>
+  <div class="panel-body" style="text-align: center;">
+    <h2>Bio:</h2> {{bio}}
+    <h2>Company:</h2> {{company}}
+    <h2>Bio:</h2> {{bio}}
+    <h2>Bio:</h2> {{bio}}
+  </div>
+</div>
+</div>
 
+
+<div></div>
 
 
 </body>
