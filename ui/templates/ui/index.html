@@ -9,25 +9,51 @@
 
 </head>
 <body>
+<style>
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  width: 40%;
+}
 
-  <div class="container">
-<div class="panel panel-default">
-  <div class="panel-heading" style="text-align: center;">
-    <a href="https://github.com/{{login}}"><img src="{{avatar_url}}" height="100" width="100"></a>
-    <h1>{{login}}</h1>
-  </div>
-  <div class="panel-body" style="text-align: center;">
-    <h2>Bio:</h2> {{bio}}
-    <h2>Company:</h2> {{company}}
-    <h2>Bio:</h2> {{bio}}
-    <h2>Bio:</h2> {{bio}}
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.container2 {
+  padding: 2px 16px;
+}
+</style>
+<form align="center">
+  <input name="github" id="username" type="text" placeholder="GitHub Username">
+  <button id="submit">Submit</button>
+</form>
+
+
+
+<div class="container" align="center">
+  <div class="card">
+    <a href="{{html_url}}"><img src="{{avatar_url}}" alt="Avatar" style="width:100%"></a>
+    <div class="container2">
+      <h4><b>{{login}}</b></h4>
+      <p>{{bio}}</p>
+      <p><a href="{{repos_url}}">Repos: {{public_repos}}</a></p>
+    </div>
   </div>
 </div>
-</div>
+
+<script>
+document.getElementById('submit').addEventListener('click', function() {
+    var formdata = new FormData();
+    username = formdata.get("github")
+    var request = new XMLHttpRequet();
+    request.open('POST', '/getuser', true);
+    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+    request.send(username)
+
+});
 
 
-<div></div>
-
-
+</script>
 </body>
 </html>
