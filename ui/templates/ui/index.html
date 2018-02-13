@@ -24,8 +24,9 @@
   padding: 2px 16px;
 }
 </style>
-<form align="center">
-  <input name="github" id="username" type="text" placeholder="GitHub Username">
+<form align="center" >
+  {%csrf_token%}
+  <input type="text" id="username" name="github" placeholder="GitHub Username">
   <button id="submit">Submit</button>
 </form>
 
@@ -43,14 +44,31 @@
 </div>
 
 <script>
-document.getElementById('submit').addEventListener('click', function() {
-    var formdata = new FormData();
-    username = formdata.get("github")
-    var request = new XMLHttpRequet();
-    request.open('POST', '/getuser', true);
-    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-    request.send(username)
+function parse_cookies() {
+    let cookies = {};
+    if (document.cookie && document.cookie !== '') {
+        document.cookie.split(';').forEach(function (c) {
+            let m = c.trim().match(/(\w+)=(.*)/);
+            if(m !== undefined) {
+                cookies[m[1]] = decodeURIComponent(m[2]);
+            }
+        });
+    }
+    return cookies;
+}
 
+
+let cookies = parse_cookies();
+document.getElementById('submit').addEventListener('click', function(e) {
+    e.preventDefault();
+    var request = new XMLHttpRequest();
+    var username = document.getElementById("username").value;
+    var data = `{"gitusername": "${username}"}`;
+
+    request.open('POST', '/getuser', true);
+    request.setRequestHeader('X-CSRFToken', cookies['csrftoken']);
+  //  request.setRequestHeader('Content-Type', 'x-www-form-urlencoded');
+    request.send(data);
 });
 
 
