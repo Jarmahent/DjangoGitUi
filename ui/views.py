@@ -5,8 +5,8 @@ from requests import get
 from json import loads
 
 
-client_id = "4165edd6278ca654d60b"
-client_secret = "c612a965668f90ccabbe98d0f1086eea75c66676"
+client_id = ""
+client_secret = ""
 
 def getUserInfo(user):
     data_request = get('https://api.github.com/users/{}?client_id={}&client_secret={}'.format(user, client_id, client_secret)).content.decode('utf-8')
