@@ -34,14 +34,46 @@
 
 <div class="container" align="center">
   <div class="card">
-    <a href="{{html_url}}"><img src="{{avatar_url}}" alt="Avatar" style="width:100%"></a>
+    <a id="login_url" href="{{html_url}}"><img id="avatar_url"src="{{avatar_url}}" alt="Avatar" style="width:100%"></a>
     <div class="container2">
-      <h4><b>{{login}}</b></h4>
-      <p>{{bio}}</p>
-      <p><a href="{{repos_url}}">Repos: {{public_repos}}</a></p>
+      <h4 id="login"><b>{{login}}</b></h4>
+      <p id="bio">{{bio}}</p>
+      <p><a id="repos" href="{{repos_url}}">Repos: {{public_repos}}</a></p>
     </div>
   </div>
 </div>
+
+<script>
+
+document.getElementById('submit').addEventListener('click', function(e) {
+    e.preventDefault();
+    var request = new XMLHttpRequest();
+    var username = document.getElementById("username").value;
+    var data = `{"gitusername": "${username}"}`;
+
+    request.open('POST', '/getuser', true);
+    request.setRequestHeader('X-CSRFToken', cookies['csrftoken']);
+  //  request.setRequestHeader('Content-Type', 'x-www-form-urlencoded');
+    request.send(data);
+
+    request.onreadystatechange = function(){
+      if(request.status == 200){
+        var parsedData = JSON.parse(request.responseText);
+        //console.log(parsedData['login']);
+        document.getElementById("login").innerHTML = parsedData['login'];
+        document.getElementById("bio").innerHTML = parsedData['bio'];
+        document.getElementById("login_url").href = parsedData['html_url'];
+        document.getElementById("avatar_url").src = parsedData['avatar_url'];
+
+
+      }
+    }
+});
+</script>
+
+
+
+
 
 <script>
 function parse_cookies() {
@@ -56,22 +88,7 @@ function parse_cookies() {
     }
     return cookies;
 }
-
-
 let cookies = parse_cookies();
-document.getElementById('submit').addEventListener('click', function(e) {
-    e.preventDefault();
-    var request = new XMLHttpRequest();
-    var username = document.getElementById("username").value;
-    var data = `{"gitusername": "${username}"}`;
-
-    request.open('POST', '/getuser', true);
-    request.setRequestHeader('X-CSRFToken', cookies['csrftoken']);
-  //  request.setRequestHeader('Content-Type', 'x-www-form-urlencoded');
-    request.send(data);
-});
-
-
 </script>
 </body>
 </html>
