@@ -16,7 +16,7 @@ def getUserInfo(user):
     return user_data
 
 
-#You were creating a submission for to get the username as ajax POST
+
 
 
 def index(request):

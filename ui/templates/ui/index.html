@@ -23,6 +23,29 @@
 .container2 {
   padding: 2px 16px;
 }
+
+ul{
+  font-size: 20px;
+  padding-left: 10px;
+  list-style: none;
+  display: inline-flex;
+  margin: 0;
+
+}
+li{
+  padding-left: 10px
+}
+
+.footer {
+   border-top: solid;
+   border-color: #00000029;
+   border-width: 1px;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+
+   text-align: center;
+}
 </style>
 <form align="center" >
   {%csrf_token%}
@@ -38,7 +61,14 @@
     <div class="container2">
       <h4 id="login"><b>{{login}}</b></h4>
       <p id="bio">{{bio}}</p>
-      <p><a id="repos" href="{{repos_url}}">Repos: {{public_repos}}</a></p>
+      <p id="repos">Repos: {{public_repos}}</p>
+
+    </div>
+    <div class="footer">
+      <ul>
+        <li id="followers">Followers: {{followers}}</li>
+        <li id="following">Following: {{following}}</li>
+      </ul>
     </div>
   </div>
 </div>
@@ -64,6 +94,9 @@ document.getElementById('submit').addEventListener('click', function(e) {
         document.getElementById("bio").innerHTML = parsedData['bio'];
         document.getElementById("login_url").href = parsedData['html_url'];
         document.getElementById("avatar_url").src = parsedData['avatar_url'];
+        document.getElementById("repos").innerHTML = "Repos: " + parsedData['public_repos'];
+        document.getElementById("followers").innerHTML = "Followers: " + parsedData['followers'];
+        document.getElementById("following").innerHTML = "Following: " + parsedData['following'];
 
 
       }

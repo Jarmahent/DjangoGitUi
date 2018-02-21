@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html>
+<head>
+  <script src={% static 'js/jq.js' %}></script>
+  <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" type="text/css" media="all">
+  <script src={% static 'js/bootstrap.js' %}></script>
+
+</head>
+<body>
+<style>
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  width: 40%;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.container2 {
+  padding: 2px 16px;
+}
+</style>
+<form align="center" >
+  {%csrf_token%}
+  <input type="text" id="username" name="github" placeholder="GitHub Username">
+  <button id="submit">Submit</button>
+</form>
+
+
+
+<div class="container" align="center">
+  <div class="card">
+    <a href="{{html_url}}"><img src="{{avatar_url}}" alt="Avatar" style="width:100%"></a>
+    <div class="container2">
+      <h4><b>{{login}}</b></h4>
+      <p>{{bio}}</p>
+      <p><a href="{{repos_url}}">Repos: {{public_repos}}</a></p>
+    </div>
+  </div>
+</div>
+<h1>>>{{foo}}<<</h1>
+<script>
+function parse_cookies() {
+    let cookies = {};
+    if (document.cookie && document.cookie !== '') {
+        document.cookie.split(';').forEach(function (c) {
+            let m = c.trim().match(/(\w+)=(.*)/);
+            if(m !== undefined) {
+                cookies[m[1]] = decodeURIComponent(m[2]);
+            }
+        });
+    }
+    return cookies;
+}
+
+
+let cookies = parse_cookies();
+document.getElementById('submit').addEventListener('click', function(e) {
+
+    //e.preventDefault();
+    var request = new XMLHttpRequest();
+    var username = document.getElementById("username").value;
+    var data = `{"gitusername": "${username}"}`;
+
+    request.open('POST', '/index', true);
+    request.setRequestHeader('X-CSRFToken', cookies['csrftoken']);
+    request.setRequestHeader('Content-Type', 'x-www-form-urlencoded');
+    request.send(data);
+    request.onreadystatechange = function(){
+      if(request.status == 200){
+        window.location.assign('/getuser');
+      }
+    }
+
+});
+
+
+</script>
+</body>
+</html>
