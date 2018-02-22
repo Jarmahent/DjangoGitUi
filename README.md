@@ -1,5 +1,5 @@
 # DjangoGitUi
-A Github cards replica, made with Django and mostly Javascript.
+A [Github cards](https://github.com/lepture/github-cards) replica, made with Django and mostly Javascript.
 
 ![Alt Text](https://i.imgur.com/Bf76hEB.gif)
 
