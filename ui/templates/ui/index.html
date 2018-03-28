@@ -87,7 +87,7 @@ document.getElementById('submit').addEventListener('click', function(e) {
     request.send(data);
 
     request.onreadystatechange = function(){
-      if(request.status == 200){
+      if(request.readyState === 4 && request.status === 200){
         var parsedData = JSON.parse(request.responseText);
         //console.log(parsedData['login']);
         document.getElementById("login").innerHTML = parsedData['login'];

@@ -71,7 +71,7 @@ document.getElementById('submit').addEventListener('click', function(e) {
     request.setRequestHeader('Content-Type', 'x-www-form-urlencoded');
     request.send(data);
     request.onreadystatechange = function(){
-      if(request.status == 200){
+      if(request.readyState === 4 && request.status === 200){
         window.location.assign('/getuser');
       }
     }
